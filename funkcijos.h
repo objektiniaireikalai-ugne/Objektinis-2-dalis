@@ -8,45 +8,34 @@
 
 double vidurkis(std::vector<int> paz);
 double mediana(std::vector<int> paz);
-void skaiciuoti(studentas& A);
 
-bool RusiuotiPagalVarda(const studentas& a, const studentas& b);
-bool RusiuotiPagalPavarde(const studentas& a, const studentas& b);
-bool RusiuotiPagalBala(const studentas& a, const studentas& b);
+bool RusiuotiPagalVarda(const Studentas& a, const Studentas& b);
+bool RusiuotiPagalPavarde(const Studentas& a, const Studentas& b);
+bool RusiuotiPagalBala(const Studentas& a, const Studentas& b);
 
 int GeneruotiPazymi();
-studentas GeneruotiStudenta(int numeris);
-void GeneruotiStudentus(std::vector<studentas>& grupe, int kiek);
+Studentas GeneruotiStudenta(int numeris);
+void GeneruotiStudentus(std::vector<Studentas>& grupe, int kiek);
 void GeneruotiFaila(const std::string& failas, int kiek);
 
-bool nuskaitymas(std::vector<studentas>& grupe, const std::string& failas);
-bool nuskaitymas(std::list<studentas>& grupe, const std::string& failas);
+bool nuskaitymas(std::vector<Studentas>& grupe, const std::string& failas);
+bool nuskaitymas(std::list<Studentas>& grupe, const std::string& failas);
 
-void kategorijos(std::vector<studentas>& grupe,
-               std::vector<studentas>& vargsiukai,
-               std::vector<studentas>& kietiakai);
+void kategorijos(std::vector<Studentas>& grupe, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietiakiai);
+void kategorijos(std::list<Studentas>& grupe, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietiakiai);
 
-void kategorijos(const std::list<studentas>& grupe,
-                std::list<studentas>& vargsiukai,
-                std::list<studentas>& kietiakai);
+void IsvestiIFaila(const std::string& failas, const std::vector<Studentas>& grupe, bool rodytiVid);
+void IsvestiIFaila(const std::string& failas, const std::list<Studentas>& grupe, bool rodytiVid);
 
-void IsvestiIFaila(const std::string& failas,
-                  const std::vector<studentas>& grupe,
-                  bool rodytiVid);
+void output(const std::vector<Studentas>& grupe, int limit, bool rodytiVid, bool rodytiMed);
 
-void IsvestiIFaila(const std::string& failas,
-                  const std::list<studentas>& grupe,
-                  bool rodytiVid);
+void split_1_vector(std::vector<Studentas>& grupe, std::vector<Studentas>& v, std::vector<Studentas>& k);
+void split_1_list(std::list<Studentas>& grupe, std::list<Studentas>& v, std::list<Studentas>& k);
 
-void output(const std::vector<studentas>& grupe, int limit, bool rodytiVid, bool rodytiMed);
+void split_2_vector(std::vector<Studentas>& grupe, std::vector<Studentas>& v);
+void split_2_list(std::list<Studentas>& grupe, std::list<Studentas>& v);
 
-void split_1_vector(std::vector<studentas>& grupe, std::vector<studentas>& v, std::vector<studentas>& k);
-void split_1_list(std::list<studentas>& grupe, std::list<studentas>& v, std::list<studentas>& k);
-
-void split_2_vector(std::vector<studentas>& grupe, std::vector<studentas>& v);
-void split_2_list(std::list<studentas>& grupe, std::list<studentas>& v);
-
-void split_3_vector(std::vector<studentas>& grupe, std::vector<studentas>& v);
-void split_3_list(std::list<studentas>& grupe, std::list<studentas>& v);
+void split_3_vector(std::vector<Studentas>& grupe, std::vector<Studentas>& v);
+void split_3_list(std::list<Studentas>& grupe, std::list<Studentas>& v);
 
 #endif
