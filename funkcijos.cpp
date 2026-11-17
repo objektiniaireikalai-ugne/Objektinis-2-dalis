@@ -248,14 +248,14 @@ void output(const vector<studentas>& grupe, int limit, bool rodytiVid, bool rody
 }
 
 void split_1_vector(vector<studentas>& grupe, vector<studentas>& v, vector<studentas>& k) {
-    v.clear(); 
+    v.clear();
     k.clear();
-    v.reserve(grupe.size()); 
+    v.reserve(grupe.size());
     k.reserve(grupe.size());
-    
+
     for (const auto& a : grupe) {
         if (a.galutinis_vidurkis < 5.0) {
-            v.push_back(a); 
+            v.push_back(a);
         } else {
             k.push_back(a);
         }
@@ -263,39 +263,41 @@ void split_1_vector(vector<studentas>& grupe, vector<studentas>& v, vector<stude
 }
 
 void split_1_list(list<studentas>& grupe, list<studentas>& v, list<studentas>& k) {
-    v.clear(); 
+    v.clear();
     k.clear();
-    
-    for (auto it = grupe.begin(); it != grupe.end(); ++it) {
-        if (it->galutinis_vidurkis < 5.0) {
-            v.push_back(*it); 
+
+    for (const auto& a : grupe) {
+        if (a.galutinis_vidurkis < 5.0) {
+            v.push_back(a);
         } else {
-            k.push_back(*it); 
+            k.push_back(a);
         }
     }
 }
 
 void split_2_vector(vector<studentas>& grupe, vector<studentas>& v) {
     v.clear();
-    for (auto it = grupe.begin(); it != grupe.end(); ) {
-        if (it->galutinis_vidurkis < 5.0) {
-            v.push_back(*it);       
-            it = grupe.erase(it);   
-        } else {
-            ++it;                  
-        }
+
+    sort(grupe.begin(), grupe.end(), [](const studentas& a, const studentas& b) {
+        return a.galutinis_vidurkis > b.galutinis_vidurkis;
+    });
+
+    while (!grupe.empty() && grupe.back().galutinis_vidurkis < 5.0) {
+        v.push_back(grupe.back());
+        grupe.pop_back();
     }
 }
 
 void split_2_list(list<studentas>& grupe, list<studentas>& v) {
     v.clear();
-    for (auto it = grupe.begin(); it != grupe.end(); ) {
-        if (it->galutinis_vidurkis < 5.0) {
-            v.push_back(*it);       
-            it = grupe.erase(it);  
-        } else {
-            ++it;
-        }
+
+    grupe.sort([](const studentas& a, const studentas& b) {
+        return a.galutinis_vidurkis > b.galutinis_vidurkis;
+    });
+
+    while (!grupe.empty() && grupe.back().galutinis_vidurkis < 5.0) {
+        v.push_back(grupe.back());
+        grupe.pop_back();
     }
 }
 
@@ -304,19 +306,19 @@ void split_3_vector(vector<studentas>& grupe, vector<studentas>& v) {
     auto it = std::partition(grupe.begin(), grupe.end(), [](const studentas& a) {
         return a.galutinis_vidurkis < 5.0;
     });
-    
-    v.assign(grupe.begin(), it);   
-    grupe.erase(grupe.begin(), it);    
+
+    v.assign(grupe.begin(), it);
+    grupe.erase(grupe.begin(), it);
 }
 
 void split_3_list(list<studentas>& grupe, list<studentas>& v) {
     v.clear();
-    auto it = grupe.begin();
-    while (it != grupe.end()) {
-        if (it->galutinis_vidurkis < 5.0) {
-            v.splice(v.end(), grupe, it++); 
-        } else {
-            ++it;
-        }
-    }
+
+    auto it = std::partition(grupe.begin(), grupe.end(), [](const studentas& a) {
+        return a.galutinis_vidurkis < 5.0;
+    });
+
+    v.assign(grupe.begin(), it);
+
+    grupe.erase(grupe.begin(), it);
 }
