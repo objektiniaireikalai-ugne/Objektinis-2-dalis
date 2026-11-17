@@ -12,7 +12,7 @@ double sek(steady_clock::time_point p1, steady_clock::time_point p2) {
     return duration<double>(p2 - p1).count();
 }
 
-void RusiavimoPasirinkimas(vector<studentas>& grupe, int pasirinkimas) {
+void RusiavimoPasirinkimas(vector<Studentas>& grupe, int pasirinkimas) {
     if (pasirinkimas == 1)      sort(grupe.begin(), grupe.end(), RusiuotiPagalVarda);
     else if (pasirinkimas == 2) sort(grupe.begin(), grupe.end(), RusiuotiPagalPavarde);
     else                        sort(grupe.begin(), grupe.end(), RusiuotiPagalBala);
@@ -23,7 +23,7 @@ void TestuotiFaila(const string& failas, int rusRusis, int kartai) {
     int n = 0;
 
     for (int k = 0; k < kartai; k++) {
-        vector<studentas> grupe, vargsiukai, kietiakai;
+        vector<Studentas> grupe, vargsiukai, kietiakai;
 
         auto visoP = steady_clock::now();
 
@@ -87,7 +87,7 @@ void TestuotiFailaList(const string& failas, int rusRusis, int kartai) {
     int n = 0;
 
     for (int k = 0; k < kartai; k++) {
-        list<studentas> grupe, vargsiukai, kietiakai;
+        list<Studentas> grupe, vargsiukai, kietiakai;
 
         auto visoP = steady_clock::now();
 
@@ -180,7 +180,7 @@ void TestuotiStrategijas() {
         cout << "\n--- Failas: " << failai[f] << " ---\n";
 
         {
-            vector<studentas> grupe, v, k;
+            vector<Studentas> grupe, v, k;
             if(nuskaitymas(grupe, failai[f])) {
                 auto t1 = steady_clock::now();
                 split_1_vector(grupe, v, k);
@@ -188,7 +188,7 @@ void TestuotiStrategijas() {
                 cout << "[Vector] 1 Strategija: " << sek(t1, t2) << " s\n";
 
                 if (f < 3) {
-                    vector<studentas> grupe2 = grupe;
+                    vector<Studentas> grupe2 = grupe;
                     t1 = steady_clock::now();
                     split_2_vector(grupe2, v);
                     t2 = steady_clock::now();
@@ -197,7 +197,7 @@ void TestuotiStrategijas() {
                     cout << "[Vector] 2 Strategija: (praleista, nes per leta)\n";
                 }
 
-                vector<studentas> grupe3 = grupe;
+                vector<Studentas> grupe3 = grupe;
                 t1 = steady_clock::now();
                 split_3_vector(grupe3, v);
                 t2 = steady_clock::now();
@@ -206,20 +206,20 @@ void TestuotiStrategijas() {
         }
 
         {
-            list<studentas> grupe, v, k;
+            list<Studentas> grupe, v, k;
             if(nuskaitymas(grupe, failai[f])) {
                 auto t1 = steady_clock::now();
                 split_1_list(grupe, v, k);
                 auto t2 = steady_clock::now();
                 cout << "[List] 1 Strategija: " << sek(t1, t2) << " s\n";
 
-                list<studentas> grupe2 = grupe;
+                list<Studentas> grupe2 = grupe;
                 t1 = steady_clock::now();
                 split_2_list(grupe2, v);
                 t2 = steady_clock::now();
                 cout << "[List] 2 Strategija: " << sek(t1, t2) << " s\n";
 
-                list<studentas> grupe3 = grupe;
+                list<Studentas> grupe3 = grupe;
                 t1 = steady_clock::now();
                 split_3_list(grupe3, v);
                 t2 = steady_clock::now();
@@ -230,7 +230,7 @@ void TestuotiStrategijas() {
 }
 
 int main() {
-    vector<studentas> grupe, vargsiukai, kietiakai;
+    vector<Studentas> grupe, vargsiukai, kietiakai;
 
     cout << "Isvesties failus rusiuoti pagal: 1 - varda, 2 - pavarde, 3 - bala: ";
     int rusRusis;
@@ -267,26 +267,32 @@ int main() {
             cout << "Kiek studentu? ";
             cin >> n;
 
-            list<studentas> listGrupe;
+            list<Studentas> listGrupe;
 
             for (int i = 0; i < n; i++) {
-                studentas A;
+                Studentas A;
+                std::string tempVar, tempPav;
                 cout << "\nVardas: ";
-                cin >> A.var;
+                cin >> tempVar; A.setVar(tempVar);
                 cout << "Pavarde: ";
-                cin >> A.pav;
-                A.paz.clear();
+                cin >> tempPav; A.setPav(tempPav);
+                
+                std::vector<int> tempPaz;
                 cout << "ND pazymiai (baigti - -1):\n";
                 while (true) {
                     int x;
                     cin >> x;
                     if (x == -1) break;
                     if (x < 1 || x > 10) { cout << "1-10!\n"; continue; }
-                    A.paz.push_back(x);
+                    tempPaz.push_back(x);
                 }
+                A.setPaz(tempPaz);
+                
+                int tempEgz;
                 cout << "Egzaminas: ";
-                cin >> A.egz;
-                skaiciuoti(A);
+                cin >> tempEgz; A.setEgz(tempEgz);
+                
+                A.skaiciuoti();
 
                 if (konteineris == 1) {
                     grupe.push_back(A);
