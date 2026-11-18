@@ -266,14 +266,15 @@ int main() {
             list<Studentas> listGrupe;
 
             for (int i = 0; i < n; i++) {
-                Studentas A;
                 std::string tempVar, tempPav;
-                cout << "\nVardas: ";
-                cin >> tempVar; A.setVar(tempVar);
-                cout << "Pavarde: ";
-                cin >> tempPav; A.setPav(tempPav);
-
                 std::vector<int> tempPaz;
+                int tempEgz;
+
+                cout << "\nVardas: ";
+                cin >> tempVar;
+                cout << "Pavarde: ";
+                cin >> tempPav;
+
                 cout << "ND pazymiai (baigti - -1):\n";
                 while (true) {
                     int x;
@@ -282,13 +283,11 @@ int main() {
                     if (x < 1 || x > 10) { cout << "1-10!\n"; continue; }
                     tempPaz.push_back(x);
                 }
-                A.setPaz(tempPaz);
 
-                int tempEgz;
                 cout << "Egzaminas: ";
-                cin >> tempEgz; A.setEgz(tempEgz);
+                cin >> tempEgz;
 
-                A.skaiciuoti();
+                Studentas A(tempVar, tempPav, tempPaz, tempEgz);
 
                 if (konteineris == 1) {
                     grupe.push_back(A);
