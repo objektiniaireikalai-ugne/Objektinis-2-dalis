@@ -288,6 +288,8 @@ Pirminis studentų sąrašas yra surūšiuojamas mažėjančia tvarka pagal galu
 | 1 000 000 | 0.19894 s | 0.79552 s | 0.18301 s |
 | 10 000 000 | 18.1231 s | 62.1184 s | 67.3102 s |
 
+<img width="426" height="913" alt="dal" src="https://github.com/user-attachments/assets/9b7a2b99-cac7-4f43-bca1-7dc9568c2dad" />
+
 ### Išvados
 
 1. **2 strategijos spartos problema:** Rūšiavimas yra pati brangiausia operacija. Net ir su optimizuotu Release režimu, 2 strategija su 10 milijonų įrašų vektoriuje užtruko net 43,2 s, o liste – 62,1 s. Tai patvirtina, kad ieškoti vargšiukų rūšiuojant visą masyvą nėra efektyvu.
