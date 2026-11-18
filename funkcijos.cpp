@@ -106,70 +106,42 @@ void GeneruotiFaila(const string& failas, int kiek) {
     }
 }
 
-bool nuskaitymas(vector<Studentas>& grupe, const string& failas) {
-    ifstream in(failas.c_str());
+bool nuskaitymas(std::vector<Studentas>& grupe, const std::string& failas) {
+    std::ifstream in(failas.c_str());
     if (!in) return false;
 
     grupe.clear();
-    string eilute;
-    getline(in, eilute);
+    std::string eilute;
+    std::getline(in, eilute);
 
-    while (getline(in, eilute)) {
+    while (std::getline(in, eilute)) {
         if (eilute.empty()) continue;
-
-        istringstream ss(eilute);
-        Studentas A;
-
-        string tempVar, tempPav;
-        if (!(ss >> tempVar >> tempPav)) continue;
-        A.setVar(tempVar);
-        A.setPav(tempPav);
-
-        vector<int> tempPaz;
-        int x;
-        while (ss >> x) tempPaz.push_back(x);
-        if (tempPaz.size() == 0) continue;
-
-        A.setEgz(tempPaz[tempPaz.size() - 1]);
-        tempPaz.pop_back();
-        A.setPaz(tempPaz);
-
-        A.skaiciuoti();
-        grupe.push_back(A);
+        std::istringstream ss(eilute);
+        
+        Studentas A(ss); 
+        if (!A.vardas().empty()) {
+            grupe.push_back(A);
+        }
     }
     return true;
 }
 
 bool nuskaitymas(std::list<Studentas>& grupe, const std::string& failas) {
-    ifstream in(failas.c_str());
+    std::ifstream in(failas.c_str());
     if (!in) return false;
 
     grupe.clear();
-    string eilute;
-    getline(in, eilute);
+    std::string eilute;
+    std::getline(in, eilute);
 
-    while (getline(in, eilute)) {
+    while (std::getline(in, eilute)) {
         if (eilute.empty()) continue;
-
-        istringstream ss(eilute);
-        Studentas A;
-
-        string tempVar, tempPav;
-        if (!(ss >> tempVar >> tempPav)) continue;
-        A.setVar(tempVar);
-        A.setPav(tempPav);
-
-        vector<int> tempPaz;
-        int x;
-        while (ss >> x) tempPaz.push_back(x);
-        if (tempPaz.size() == 0) continue;
-
-        A.setEgz(tempPaz[tempPaz.size() - 1]);
-        tempPaz.pop_back();
-        A.setPaz(tempPaz);
-
-        A.skaiciuoti();
-        grupe.push_back(A);
+        std::istringstream ss(eilute);
+        
+        Studentas A(ss);
+        if (!A.vardas().empty()) {
+            grupe.push_back(A);
+        }
     }
     return true;
 }
