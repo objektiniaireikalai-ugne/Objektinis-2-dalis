@@ -187,15 +187,11 @@ void TestuotiStrategijas() {
                 auto t2 = steady_clock::now();
                 cout << "[Vector] 1 Strategija: " << sek(t1, t2) << " s\n";
 
-                if (f < 3) {
-                    vector<studentas> grupe2 = grupe;
-                    t1 = steady_clock::now();
-                    split_2_vector(grupe2, v);
-                    t2 = steady_clock::now();
-                    cout << "[Vector] 2 Strategija: " << sek(t1, t2) << " s\n";
-                } else {
-                    cout << "[Vector] 2 Strategija: (praleista, nes per leta)\n";
-                }
+                vector<studentas> grupe2 = grupe;
+                t1 = steady_clock::now();
+                split_2_vector(grupe2, v);
+                t2 = steady_clock::now();
+                cout << "[Vector] 2 Strategija: " << sek(t1, t2) << " s\n";
 
                 vector<studentas> grupe3 = grupe;
                 t1 = steady_clock::now();
