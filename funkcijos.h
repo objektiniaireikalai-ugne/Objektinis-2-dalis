@@ -22,7 +22,7 @@ bool nuskaitymas(std::vector<Studentas>& grupe, const std::string& failas);
 bool nuskaitymas(std::list<Studentas>& grupe, const std::string& failas);
 
 void kategorijos(std::vector<Studentas>& grupe, std::vector<Studentas>& vargsiukai, std::vector<Studentas>& kietiakiai);
-void kategorijos(std::list<Studentas>& grupe, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietiakiai);
+void kategorijos(const std::list<Studentas>& grupe, std::list<Studentas>& vargsiukai, std::list<Studentas>& kietiakiai);
 
 void IsvestiIFaila(const std::string& failas, const std::vector<Studentas>& grupe, bool rodytiVid);
 void IsvestiIFaila(const std::string& failas, const std::list<Studentas>& grupe, bool rodytiVid);
