@@ -306,3 +306,14 @@ Studentai, kurių balas < 5.0, yra nukopijuojami į `vargsiukai` konteinerį ir 
 
 4. **Bendras optimizavimas:** 
    Jei duomenų nedaug (iki 100k), 3 strategija yra akivaizdžiai geriausia. Tačiau su milžinišku duomenų kiekiu (10M) paprastas duomenų kopijavimas (1 strategija) gali netikėtai laimėti prieš sudėtingus algoritmus. Tai parodo, kad optimizavimas visada turi būti pagrįstas realiais testais, o ne aklu taisyklių taikymu.
+
+### Struct (v1.0) vs Class (v1.1) spartos palyginimas
+
+Palyginimas atliktas naudojant fiksuotą `std::vector` konteinerį ir greičiausią (3-iąją) dalijimo strategiją, pagrįstą `std::partition` algoritmu.
+
+| Failas (įrašų sk.) | Struct (v1.0) laikas | Class (v1.1) laikas |
+|--------------------|----------------------|---------------------|
+| 100 000 | 0.01989 s | 0.02542 s |
+| 1 000 000 | 0.21806 s | 0.51020 s |
+
+**Išvada:** Kaip matome, perėjimas nuo `struct` prie `class` neturi kritinės neigiamos įtakos programos spartai. Laikai išlieka toje pačioje eilėje (skirtumai gali būti nulemti tuo metu vykusių foninių procesų kompiuteryje arba nežymių klasės kodo pakeitimų). Kompiliatorius abiem atvejais optimizuoja duomenų struktūras pakankamai efektyviai, todėl objektinio programavimo principų taikymas neužgožia programos našumo.
