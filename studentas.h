@@ -23,6 +23,11 @@ public:
         readStudent(is);
     }
 
+    Studentas(const std::string& v, const std::string& p, const std::vector<int>& pz, int e)
+        : vardas_(v), pavarde_(p), nd_(pz), egzaminas_(e), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
+        skaiciuoti();
+    }
+
     Studentas(const Studentas& kitas)
         : vardas_(kitas.vardas_), pavarde_(kitas.pavarde_), nd_(kitas.nd_), egzaminas_(kitas.egzaminas_),
           galutinis_vidurkis_(kitas.galutinis_vidurkis_), galutinis_mediana_(kitas.galutinis_mediana_) {}
@@ -66,6 +71,8 @@ public:
 
     inline std::string vardas() const { return vardas_; }
     inline std::string pavarde() const { return pavarde_; }
+    inline std::vector<int> pazymiai() const { return nd_; }
+    inline int egzaminas() const { return egzaminas_; }
     inline double galVid() const { return galutinis_vidurkis_; }
     inline double galMed() const { return galutinis_mediana_; }
     
