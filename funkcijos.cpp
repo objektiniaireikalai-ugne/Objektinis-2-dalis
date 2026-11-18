@@ -32,7 +32,7 @@ void Studentas::skaiciuoti() {
         galutinis_mediana = 0.6 * egz;
     } else {
         double s = 0;
-        for (int i = 0; i < paz.size(); i++) s += paz[i];
+        for (size_t i = 0; i < paz.size(); i++) s += paz[i];
         galutinis_vidurkis = 0.4 * (s / paz.size()) + 0.6 * egz;
 
         std::vector<int> kopija = paz;
@@ -67,7 +67,7 @@ Studentas GeneruotiStudenta(int numeris) {
     Studentas A;
     A.setVar("Vardas" + to_string(numeris));
     A.setPav("Pavarde" + to_string(numeris));
-    
+
     vector<int> tempPaz;
     int kiek = dist(gen) % 8 + 3;
     for (int i = 0; i < kiek; i++) {
@@ -75,7 +75,7 @@ Studentas GeneruotiStudenta(int numeris) {
     }
     A.setPaz(tempPaz);
     A.setEgz(GeneruotiPazymi());
-    
+
     A.skaiciuoti();
     return A;
 }
@@ -119,7 +119,7 @@ bool nuskaitymas(vector<Studentas>& grupe, const string& failas) {
 
         istringstream ss(eilute);
         Studentas A;
-        
+
         string tempVar, tempPav;
         if (!(ss >> tempVar >> tempPav)) continue;
         A.setVar(tempVar);
@@ -153,7 +153,7 @@ bool nuskaitymas(std::list<Studentas>& grupe, const std::string& failas) {
 
         istringstream ss(eilute);
         Studentas A;
-        
+
         string tempVar, tempPav;
         if (!(ss >> tempVar >> tempPav)) continue;
         A.setVar(tempVar);
@@ -195,12 +195,14 @@ void kategorijos(vector<Studentas>& grupe, vector<Studentas>& nabageliai, vector
     grupe.shrink_to_fit();
 }
 
-void kategorijos(const std::list<Studentas>& grupe, std::list<Studentas>& nabageliai, std::list<Studentas>& kietiakai) {
+void kategorijos(const std::list<Studentas>& grupe,
+                 std::list<Studentas>& nabageliai,
+                 std::list<Studentas>& kietiakai) {
     nabageliai.clear();
     kietiakai.clear();
 
     for (auto it = grupe.begin(); it != grupe.end(); ++it) {
-        if (it->getGalVid() < 5.0) { 
+        if (it->getGalVid() < 5.0) {
             nabageliai.push_back(*it);
         } else {
             kietiakai.push_back(*it);
@@ -220,7 +222,7 @@ void IsvestiIFaila(const string& failas, const vector<Studentas>& grupe, bool ro
         if (rodytiVid) {
             out << grupe[i].getGalVid();
         } else {
-            out << grupe[i].getGalMed(); 
+            out << grupe[i].getGalMed();
         }
         out << "\n";
     }
@@ -234,9 +236,9 @@ void IsvestiIFaila(const std::string& failas, const std::list<Studentas>& grupe,
     for (auto it = grupe.begin(); it != grupe.end(); ++it) {
         out << left << setw(16) << it->getVar() << setw(20) << it->getPav() << right << setw(20);
         if (rodytiVid) {
-            out << it->getGalVid(); 
+            out << it->getGalVid();
         } else {
-            out << it->getGalMed(); 
+            out << it->getGalMed();
         }
         out << "\n";
     }
@@ -262,7 +264,7 @@ void output(const vector<Studentas>& grupe, int limit, bool rodytiVid, bool rody
         cout << left << setw(16) << grupe[i].getVar()
              << setw(20) << grupe[i].getPav();
         if (rodytiVid) cout << right << setw(20) << grupe[i].getGalVid();
-        if (rodytiMed) cout << right << setw(20) << grupe[i].getGalMed(); 
+        if (rodytiMed) cout << right << setw(20) << grupe[i].getGalMed();
         cout << "\n";
     }
 }
