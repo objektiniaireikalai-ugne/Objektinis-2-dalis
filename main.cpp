@@ -187,15 +187,11 @@ void TestuotiStrategijas() {
                 auto t2 = steady_clock::now();
                 cout << "[Vector] 1 Strategija: " << sek(t1, t2) << " s\n";
 
-                if (f < 3) {
-                    vector<Studentas> grupe2 = grupe;
-                    t1 = steady_clock::now();
-                    split_2_vector(grupe2, v);
-                    t2 = steady_clock::now();
-                    cout << "[Vector] 2 Strategija: " << sek(t1, t2) << " s\n";
-                } else {
-                    cout << "[Vector] 2 Strategija: (praleista, nes per leta)\n";
-                }
+                vector<Studentas> grupe2 = grupe;
+                t1 = steady_clock::now();
+                split_2_vector(grupe2, v);
+                t2 = steady_clock::now();
+                cout << "[Vector] 2 Strategija: " << sek(t1, t2) << " s\n";
 
                 vector<Studentas> grupe3 = grupe;
                 t1 = steady_clock::now();
@@ -276,7 +272,7 @@ int main() {
                 cin >> tempVar; A.setVar(tempVar);
                 cout << "Pavarde: ";
                 cin >> tempPav; A.setPav(tempPav);
-                
+
                 std::vector<int> tempPaz;
                 cout << "ND pazymiai (baigti - -1):\n";
                 while (true) {
@@ -287,11 +283,11 @@ int main() {
                     tempPaz.push_back(x);
                 }
                 A.setPaz(tempPaz);
-                
+
                 int tempEgz;
                 cout << "Egzaminas: ";
                 cin >> tempEgz; A.setEgz(tempEgz);
-                
+
                 A.skaiciuoti();
 
                 if (konteineris == 1) {
