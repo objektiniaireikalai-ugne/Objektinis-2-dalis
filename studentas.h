@@ -3,42 +3,77 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include <algorithm>
 
 class Studentas {
 private:
-    std::string var;
-    std::string pav;
-    std::vector<int> paz;
-    int egz;
-    double galutinis_vidurkis;
-    double galutinis_mediana;
+    std::string vardas_;
+    std::string pavarde_;
+    std::vector<int> nd_;
+    int egzaminas_;
+    double galutinis_vidurkis_;
+    double galutinis_mediana_;
+
+    void skaiciuoti();
 
 public:
-    Studentas() : var(""), pav(""), egz(0), galutinis_vidurkis(0.0), galutinis_mediana(0.0) {}
-
-    Studentas(std::string v, std::string p, std::vector<int> pz, int e) 
-        : var(v), pav(p), paz(pz), egz(e), galutinis_vidurkis(0.0), galutinis_mediana(0.0) {}
+    Studentas() : egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {}
+    Studentas(std::istream& is) : egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
+        readStudent(is);
+    }
 
     Studentas(const Studentas& kitas)
-        : var(kitas.var), pav(kitas.pav), paz(kitas.paz), egz(kitas.egz),
-          galutinis_vidurkis(kitas.galutinis_vidurkis), galutinis_mediana(kitas.galutinis_mediana) {}
+        : vardas_(kitas.vardas_), pavarde_(kitas.pavarde_), nd_(kitas.nd_), egzaminas_(kitas.egzaminas_),
+          galutinis_vidurkis_(kitas.galutinis_vidurkis_), galutinis_mediana_(kitas.galutinis_mediana_) {}
+
+    Studentas(Studentas&& kitas) noexcept
+        : vardas_(std::move(kitas.vardas_)), pavarde_(std::move(kitas.pavarde_)), nd_(std::move(kitas.nd_)),
+          egzaminas_(kitas.egzaminas_), galutinis_vidurkis_(kitas.galutinis_vidurkis_), galutinis_mediana_(kitas.galutinis_mediana_) {
+        kitas.egzaminas_ = 0;
+        kitas.galutinis_vidurkis_ = 0.0;
+        kitas.galutinis_mediana_ = 0.0;
+    }
+
+    Studentas& operator=(const Studentas& kitas) {
+        if (this != &kitas) {
+            vardas_ = kitas.vardas_;
+            pavarde_ = kitas.pavarde_;
+            nd_ = kitas.nd_;
+            egzaminas_ = kitas.egzaminas_;
+            galutinis_vidurkis_ = kitas.galutinis_vidurkis_;
+            galutinis_mediana_ = kitas.galutinis_mediana_;
+        }
+        return *this;
+    }
+
+    Studentas& operator=(Studentas&& kitas) noexcept {
+        if (this != &kitas) {
+            vardas_ = std::move(kitas.vardas_);
+            pavarde_ = std::move(kitas.pavarde_);
+            nd_ = std::move(kitas.nd_);
+            egzaminas_ = kitas.egzaminas_;
+            galutinis_vidurkis_ = kitas.galutinis_vidurkis_;
+            galutinis_mediana_ = kitas.galutinis_mediana_;
+            kitas.egzaminas_ = 0;
+            kitas.galutinis_vidurkis_ = 0.0;
+            kitas.galutinis_mediana_ = 0.0;
+        }
+        return *this;
+    }
 
     ~Studentas() {}
 
-    std::string getVar() const { return var; }
-    std::string getPav() const { return pav; }
-    std::vector<int> getPaz() const { return paz; }
-    int getEgz() const { return egz; }
-    double getGalVid() const { return galutinis_vidurkis; }
-    double getGalMed() const { return galutinis_mediana; }
-
-    void setVar(std::string v) { var = v; }
-    void setPav(std::string p) { pav = p; }
-    void setPaz(const std::vector<int>& p) { paz = p; }
-    void setEgz(int e) { egz = e; }
-
-    void skaiciuoti();
+    inline std::string vardas() const { return vardas_; }
+    inline std::string pavarde() const { return pavarde_; }
+    inline double galVid() const { return galutinis_vidurkis_; }
+    inline double galMed() const { return galutinis_mediana_; }
+    
+    std::istream& readStudent(std::istream& is);
 };
+
+bool compare(const Studentas& a, const Studentas& b);
+bool comparePagalPavarde(const Studentas& a, const Studentas& b);
+bool comparePagalEgza(const Studentas& a, const Studentas& b);
 
 #endif
