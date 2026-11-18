@@ -301,11 +301,11 @@ Pirminis studentų sąrašas yra surūšiuojamas mažėjančia tvarka pagal galu
 
 ### Struct (v1.0) vs Class (v1.1) spartos palyginimas
 
-Palyginimas atliktas naudojant fiksuotą `std::vector` konteinerį ir greičiausią (3-iąją) dalijimo strategiją, pagrįstą `std::partition` algoritmu.
+Palyginti abiejų programų versijų spartą, buvo pasirinktas fiksuotas `std::vector` konteineris, **1-oji dalijimo strategija** (kuri pagal naujausius testus pasirodė greičiausia tiek su 100k, tiek su 1M įrašų) bei 100 000 ir 1 000 000 įrašų failai.
 
 | Failas (įrašų sk.) | Struct (v1.0) laikas | Class (v1.1) laikas |
 |--------------------|----------------------|---------------------|
-| 100 000 | 0.01989 s | 0.02542 s |
-| 1 000 000 | 0.21806 s | 0.51020 s |
+| 100 000 | 0.02125 s | 0.03601 s |
+| 1 000 000 | 0.23793 s | 0.49664 s |
 
-**Išvada:** Kaip matome, perėjimas nuo `struct` prie `class` neturi kritinės neigiamos įtakos programos spartai. Laikai išlieka toje pačioje eilėje (skirtumai gali būti nulemti tuo metu vykusių foninių procesų kompiuteryje arba nežymių klasės kodo pakeitimų). Kompiliatorius abiem atvejais optimizuoja duomenų struktūras pakankamai efektyviai, todėl objektinio programavimo principų taikymas neužgožia programos našumo.
+**Išvada:** Perėjus nuo `struct` prie `class` (su privačiais duomenimis, getteriais ir visais reikiamais konstruktoriais), programos sparta pastebimai sulėtėjo. Tai lėmė tai, kad klasėje objektų kūrimas dabar vyksta per parametrizuotą konstruktorių, kuris iškart automatiškai kviečia `skaiciuoti()` metodą. Nors tai ir prideda papildomų skaičiavimų konteineriui persitvarkant, toks sprendimas yra būtinas norint užtikrinti duomenų vientisumą ir išvengti neapibrėžto elgesio (undefined behaviour). Objektinio programavimo privalumai (duomenų apsauga) čia yra svarbesni už minimalų greičio praradimą.
