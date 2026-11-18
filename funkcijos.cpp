@@ -64,20 +64,17 @@ int GeneruotiPazymi() {
 }
 
 Studentas GeneruotiStudenta(int numeris) {
-    Studentas A;
-    A.setVar("Vardas" + to_string(numeris));
-    A.setPav("Pavarde" + to_string(numeris));
+    std::string v = "Vardas" + std::to_string(numeris);
+    std::string p = "Pavarde" + std::to_string(numeris);
 
-    vector<int> tempPaz;
+    std::vector<int> tempPaz;
     int kiek = dist(gen) % 8 + 3;
     for (int i = 0; i < kiek; i++) {
         tempPaz.push_back(GeneruotiPazymi());
     }
-    A.setPaz(tempPaz);
-    A.setEgz(GeneruotiPazymi());
+    int egzaminas = GeneruotiPazymi();
 
-    A.skaiciuoti();
-    return A;
+    return Studentas(v, p, tempPaz, egzaminas);
 }
 
 void GeneruotiStudentus(vector<Studentas>& grupe, int kiek) {
