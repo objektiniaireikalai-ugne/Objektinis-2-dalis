@@ -27,32 +27,48 @@ double mediana(vector<int> paz) {
 }
 
 void Studentas::skaiciuoti() {
-    if (paz.empty()) {
-        galutinis_vidurkis = 0.6 * egz;
-        galutinis_mediana = 0.6 * egz;
+    if (nd_.empty()) {
+        galutinis_vidurkis_ = 0.6 * egzaminas_;
+        galutinis_mediana_ = 0.6 * egzaminas_;
     } else {
         double s = 0;
-        for (size_t i = 0; i < paz.size(); i++) s += paz[i];
-        galutinis_vidurkis = 0.4 * (s / paz.size()) + 0.6 * egz;
+        for (size_t i = 0; i < nd_.size(); i++) s += nd_[i];
+        galutinis_vidurkis_ = 0.4 * (s / nd_.size()) + 0.6 * egzaminas_;
 
-        std::vector<int> kopija = paz;
+        std::vector<int> kopija = nd_;
         std::sort(kopija.begin(), kopija.end());
         int n = kopija.size();
         double med = (n % 2 == 0) ? (kopija[n/2 - 1] + kopija[n/2]) / 2.0 : kopija[n/2];
-        galutinis_mediana = 0.4 * med + 0.6 * egz;
+        galutinis_mediana_ = 0.4 * med + 0.6 * egzaminas_;
     }
 }
 
+std::istream& Studentas::readStudent(std::istream& is) {
+    is >> vardas_ >> pavarde_;
+
+    std::vector<int> tempPaz;
+    int x;
+    while (is >> x) tempPaz.push_back(x);
+
+    if (!tempPaz.empty()) {
+        egzaminas_ = tempPaz.back();
+        tempPaz.pop_back();
+        nd_ = tempPaz;
+        skaiciuoti();
+    }
+    return is;
+}
+
 bool RusiuotiPagalVarda(const Studentas& a, const Studentas& b) {
-    return a.getVar() < b.getVar();
+    return a.vardas() < b.vardas();
 }
 
 bool RusiuotiPagalPavarde(const Studentas& a, const Studentas& b) {
-    return a.getPav() < b.getPav();
+    return a.pavarde() < b.pavarde();
 }
 
 bool RusiuotiPagalBala(const Studentas& a, const Studentas& b) {
-    return a.getGalVid() < b.getGalVid();
+    return a.galVid() < b.galVid();
 }
 
 
@@ -95,7 +111,7 @@ void GeneruotiFaila(const string& failas, int kiek) {
 
     for (int i = 0; i < kiek; i++) {
         Studentas A = GeneruotiStudenta(i + 1);
-        out << left << setw(16) << A.getVar() << setw(20) << A.getPav();
+        out << left << setw(16) << A.vardas() << setw(20) << A.pavarde(); 
         for (int j = 0; j < 15; j++) {
             out << right << setw(6) << GeneruotiPazymi();
         }
@@ -151,7 +167,7 @@ void kategorijos(vector<Studentas>& grupe, vector<Studentas>& nabageliai, vector
     kietiakai.reserve(grupe.size());
 
     for (const auto &a : grupe) {
-        if (a.getGalVid() < 5.0) {
+        if (a.galVid() < 5.0) { 
             nabageliai.push_back(a);
         } else {
             kietiakai.push_back(a);
@@ -171,7 +187,7 @@ void kategorijos(const std::list<Studentas>& grupe,
     kietiakai.clear();
 
     for (auto it = grupe.begin(); it != grupe.end(); ++it) {
-        if (it->getGalVid() < 5.0) {
+        if (it->galVid() < 5.0) { 
             nabageliai.push_back(*it);
         } else {
             kietiakai.push_back(*it);
@@ -187,11 +203,11 @@ void IsvestiIFaila(const string& failas, const vector<Studentas>& grupe, bool ro
 
     out << fixed << setprecision(2);
     for (int i = 0; i < (int)grupe.size(); i++) {
-        out << left << setw(16) << grupe[i].getVar() << setw(20) << grupe[i].getPav() << right << setw(20);
+        out << left << setw(16) << grupe[i].vardas() << setw(20) << grupe[i].pavarde() << right << setw(20); 
         if (rodytiVid) {
-            out << grupe[i].getGalVid();
+            out << grupe[i].galVid();
         } else {
-            out << grupe[i].getGalMed();
+            out << grupe[i].galMed();
         }
         out << "\n";
     }
@@ -203,11 +219,11 @@ void IsvestiIFaila(const std::string& failas, const std::list<Studentas>& grupe,
     out << fixed << setprecision(2);
 
     for (auto it = grupe.begin(); it != grupe.end(); ++it) {
-        out << left << setw(16) << it->getVar() << setw(20) << it->getPav() << right << setw(20);
+        out << left << setw(16) << it->vardas() << setw(20) << it->pavarde() << right << setw(20); 
         if (rodytiVid) {
-            out << it->getGalVid();
+            out << it->galVid();
         } else {
-            out << it->getGalMed();
+            out << it->galMed();
         }
         out << "\n";
     }
@@ -230,10 +246,9 @@ void output(const vector<Studentas>& grupe, int limit, bool rodytiVid, bool rody
 
     cout << fixed << setprecision(2);
     for (int i = 0; i < n; i++) {
-        cout << left << setw(16) << grupe[i].getVar()
-             << setw(20) << grupe[i].getPav();
-        if (rodytiVid) cout << right << setw(20) << grupe[i].getGalVid();
-        if (rodytiMed) cout << right << setw(20) << grupe[i].getGalMed();
+        cout << left << setw(16) << grupe[i].vardas() << setw(20) << grupe[i].pavarde();       
+        if (rodytiVid) cout << right << setw(20) << grupe[i].galVid();
+        if (rodytiMed) cout << right << setw(20) << grupe[i].galMed();
         cout << "\n";
     }
 }
@@ -245,7 +260,7 @@ void split_1_vector(vector<Studentas>& grupe, vector<Studentas>& v, vector<Stude
     k.reserve(grupe.size());
 
     for (const auto& a : grupe) {
-        if (a.getGalVid() < 5.0) {
+        if (a.galVid() < 5.0) { 
             v.push_back(a);
         } else {
             k.push_back(a);
@@ -258,7 +273,7 @@ void split_1_list(list<Studentas>& grupe, list<Studentas>& v, list<Studentas>& k
     k.clear();
 
     for (const auto& a : grupe) {
-        if (a.getGalVid() < 5.0) {
+        if (a.galVid() < 5.0) { 
             v.push_back(a);
         } else {
             k.push_back(a);
@@ -270,10 +285,10 @@ void split_2_vector(vector<Studentas>& grupe, vector<Studentas>& v) {
     v.clear();
 
     sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) {
-        return a.getGalVid() > b.getGalVid();
+        return a.galVid() > b.galVid(); 
     });
 
-    while (!grupe.empty() && grupe.back().getGalVid() < 5.0) {
+    while (!grupe.empty() && grupe.back().galVid() < 5.0) { 
         v.push_back(grupe.back());
         grupe.pop_back();
     }
@@ -283,10 +298,10 @@ void split_2_list(list<Studentas>& grupe, list<Studentas>& v) {
     v.clear();
 
     grupe.sort([](const Studentas& a, const Studentas& b) {
-        return a.getGalVid() > b.getGalVid();
+        return a.galVid() > b.galVid(); 
     });
 
-    while (!grupe.empty() && grupe.back().getGalVid() < 5.0) {
+    while (!grupe.empty() && grupe.back().galVid() < 5.0) { 
         v.push_back(grupe.back());
         grupe.pop_back();
     }
@@ -295,7 +310,7 @@ void split_2_list(list<Studentas>& grupe, list<Studentas>& v) {
 void split_3_vector(vector<Studentas>& grupe, vector<Studentas>& v) {
     v.clear();
     auto it = std::partition(grupe.begin(), grupe.end(), [](const Studentas& a) {
-        return a.getGalVid() < 5.0;
+        return a.galVid() < 5.0; 
     });
 
     v.assign(grupe.begin(), it);
@@ -306,7 +321,7 @@ void split_3_list(list<Studentas>& grupe, list<Studentas>& v) {
     v.clear();
 
     auto it = std::partition(grupe.begin(), grupe.end(), [](const Studentas& a) {
-        return a.getGalVid() < 5.0;
+        return a.galVid() < 5.0; 
     });
 
     v.assign(grupe.begin(), it);
