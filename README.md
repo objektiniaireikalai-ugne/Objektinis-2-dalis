@@ -299,6 +299,17 @@ Pirminis studentų sąrašas yra surūšiuojamas mažėjančia tvarka pagal galu
    * Sąraše (`list`) su 10M įrašų 1 strategija (18.12 s) taip pat nugalėjo 3 strategiją (67.31 s) dėl tos pačios priežasties – rodyklių „vaikymasis“ dideliame duomenų kiekyje yra lėtas.
 3. **Bendra išvada:** Jei duomenų nedaug, geriausia naudoti `std::partition` (3 strategija). Tačiau esant milžiniškiems duomenų kiekiams, paprastas kopijavimas į du naujus konteinerius (1 strategija) gali pasirodyti netikėtai greitesnis.
 
+## v1.1 – Perėjimas nuo struktūros prie pilnavertės klasės
+
+Šiame atnaujinime programa buvo patobulinta laikantis objektinio programavimo „gerųjų praktikų“. Pagrindiniai pakeitimai:
+
+### Kodo pertvarkymas:
+* **Struktūra paversta į klasę:** Sukurta pilnavertė `Studentas` klasė su privačiais duomenimis (naudojamas `_` pabraukimas).
+* **Duomenų apsauga:** Panaikinti visi setteriai (`setVar`, `setPav` ir kt.), užtikrinant, kad nuskaityti duomenys negalėtų būti keičiami.
+* **Saugus nuskaitymas:** Pridėtas konstruktorius, priimantis `std::istream&` ir `readStudent()` metodas, leidžiantis klasei savarankiškai ir saugiai nuskaityti duomenis iš failo.
+* **Rule of 5:** Klasė realizuota su visais reikiamais konstruktoriais (numatytuoju, parametrizuotu, kopijavimo, perkėlimo), priskyrimo operatoriais ir destruktoriumi.
+* **Getteriai:** Visi duomenų gavimo metodai (getteriai) realizuoti kaip `inline` funkcijos.
+
 ### Struct (v1.0) vs Class (v1.1) spartos palyginimas
 
 Palyginimas atliktas naudojant fiksuotą `std::vector` konteinerį, greičiausią (1-ąją) dalijimo strategiją bei 100 000 ir 1 000 000 įrašų failus. Abu testai atlikti **Release** režime.
