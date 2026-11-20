@@ -67,7 +67,14 @@ public:
         return *this;
     }
 
-    ~Studentas() {}
+ ~Studentas() {
+        vardas_.clear();
+        pavarde_.clear();
+        nd_.clear();
+        egzaminas_ = 0;
+        galutinis_vidurkis_ = 0.0;
+        galutinis_mediana_ = 0.0;
+    }
 
     inline std::string vardas() const { return vardas_; }
     inline std::string pavarde() const { return pavarde_; }
