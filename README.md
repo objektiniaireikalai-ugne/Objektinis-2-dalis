@@ -348,3 +348,40 @@ Atlikta eksperimentinė analizė, kaip programos sparta ir sugeneruoto vykdomojo
 1. **Optimizavimo įtaka klasei:** Be optimizavimo (`-O0`) klasės versija yra pastebimai lėtesnė už struktūros (7.27 s prieš 5.68 s su 1M įrašų), nes kompiliatorius kiekvieną kartą fiziškai kviečia geterius ir konstruktorius. Tačiau įjungus bet kokį optimizavimą (`-O1`, `-O2` ar `-O3`), šis skirtumas išnyksta – kompiliatorius automatiškai įterpia (inline) šiuos paprastus metodus. Su 1M įrašų abiejų versijų laikai susilygina ties ~4.0–4.7 s riba.
 2. **Nestabilūs 100k laikai:** Mažesnio failo (100 000 įrašų) matavimai yra labiau veikiami foninių operacinės sistemos procesų ir disko podėlio (I/O). Todėl su `-O1`, `-O2` ir `-O3` laikai gali atrodyti šiek tiek prasčiau nei su `-O0`, nors tai nėra susiję su pačiu algoritmu.
 3. **`.exe` failo dydis:** Optimizavimo flag'ai beveik nepakeitė `.exe` failo dydžio (jis išliko 107–108 KB). Taip yra todėl, kad didžioji dalis kodo yra C++ standartinės bibliotekos (STL) komponentai, kurie yra įkeliami dinamiškai, o pats optimizavimas labiau keičia instrukcijų vykdymo efektyvumą, o ne failo apimtį. Klasės versijos `.exe` failas yra net 1 KB mažesnis (107 KB prieš 108 KB), o tai rodo, kad objektyvus kodas yra šiek tiek kompaktiškesnis.
+
+## v1.2 – Rule of Three ir Įvesties/Išvesties operatoriai
+
+Šioje versijoje buvo pilnai įgyvendinta **„Rule of Three“** ir perdengti įvesties bei išvesties operatoriai, leidžiantys lengviau naudoti `Studentas` klasę ateities programuotojams.
+
+### 1. Rule of Three realizacija
+
+Klasė `Studentas` tvarko resursus (dinaminius `std::string` ir `std::vector`), todėl pagal C++ standartus jai būtinai reikia šių trijų specialiųjų metodų:
+1. **Destruktorius (`~Studentas()`):** Atlaisvina resursus, kai objektas sunaikinamas. Nors STL konteineriai tai daro automatiškai, mes aiškiai išvalome duomenis, kad parodytume supratimą apie resursų valdymą.
+2. **Kopijavimo konstruktorius (`Studentas(const Studentas&)`):** Užtikrina, kad kopijuojant objektą (pvz., dedant į `std::vector`), visi duomenys būtų nukopijuoti saugiai (atliekamas giluminis kopijavimas).
+3. **Kopijavimo priskyrimo operatorius (`operator=`):** Leidžia saugiai priskirti vieną jau egzistuojantį studentą kitam, išvengiant atminties nutekėjimo ar savęs priskyrimo problemų.
+
+*(Papildoma pastaba: Kadangi mokomės modernaus C++11 standarto, mes taip pat realizavome ir perkėlimo (move) konstruktorių bei perkėlimo priskyrimo operatorių. Tai reiškia, kad mūsų klasė atitinka ir platesnę „Rule of Five“ taisyklę, tačiau pagrindiniai „Rule of Three“ reikalavimai yra pilnai įvykdyti.)*
+
+### 2. Perdengti įvesties ir išvesties operatoriai
+
+**Įvesties operatorius (`operator>>`)**
+Leidžia nuskaityti studento duomenis tiesiai iš bet kokio srauto (`cin`, `ifstream`, `istringstream`). Šis operatorius automatiškai nuskaito vardą, pavardę, pažymius ir paskutinį skaičių priskiria egzaminui.
+*Panaudojimas:* `std::cin >> studentas;` arba `ss >> studentas;` (failo skaitymo metu).
+
+**Išvesties operatorius (`operator<<`)**
+Leidžia išvesti studento duomenis į bet kokį srautą. Jis išveda bazinę informaciją: vardą, pavardę ir galutinį balą (vidurkį), gražiai sulygiuotą.
+*Panaudojimas:* `std::cout << studentas;` arba `out << studentas;`.
+
+### 3. Duomenų įvesties ir išvesties metodų apžvalga
+
+Mūsų programa palaiko kelis skirtingus būdus, kaip dirbti su duomenimis, kas užtikrina lankstumą naudojant klasę:
+
+**Duomenų įvestis:**
+*   **Rankiniu būdu:** Vartotojas įveda duomenis per terminalą (naudojant `cin`). Šis būdas naudojamas meniu 1 punkte.
+*   **Automatiniu būdu:** Programa pati sugeneruoja studentus su atsitiktiniais pažymiais (`GeneruotiStudenta` funkcija).
+*   **Iš failo:** Duomenys nuskaitomi iš `.txt` failo. Failo eilutė paverčiama į `istringstream` ir studentas sukuriamas naudojant `operator>>`.
+
+**Duomenų išvestis:**
+*   **Į ekraną:** Naudojama specializuota `output()` funkcija, kuri leidžia pasirinkti, ar rodyti vidurkį, ar medianą, ir gražiai suformatuoja lentelę.
+*   **Į failą:** Naudojama `IsvestiIFaila()` funkcija. Ji išsaugo studentų sąrašą į tekstinį failą, taip pat leisdama pasirinkti vidurkio ar medianos stulpelį.
+
