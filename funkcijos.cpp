@@ -328,3 +328,26 @@ void split_3_list(list<Studentas>& grupe, list<Studentas>& v) {
 
     grupe.erase(grupe.begin(), it);
 }
+
+std::istream& operator>>(std::istream& is, Studentas& s) {
+    is >> s.vardas_ >> s.pavarde_;
+
+    std::vector<int> tempPaz;
+    int x;
+    while (is >> x) tempPaz.push_back(x);
+
+    if (!tempPaz.empty()) {
+        s.egzaminas_ = tempPaz.back();
+        tempPaz.pop_back();
+        s.nd_ = tempPaz;
+        s.skaiciuoti();
+    }
+    return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const Studentas& s) {
+    os << std::left << std::setw(16) << s.vardas() 
+       << std::setw(20) << s.pavarde() 
+       << std::right << std::setw(20) << std::fixed << std::setprecision(2) << s.galVid();
+    return os;
+}
