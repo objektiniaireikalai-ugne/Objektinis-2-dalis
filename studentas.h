@@ -1,15 +1,14 @@
 #ifndef STUDENTAS_H
 #define STUDENTAS_H
 
+#include "zmogus.h"
 #include <string>
 #include <vector>
 #include <iostream>
 #include <algorithm>
 
-class Studentas {
+class Studentas : public Zmogus {
 private:
-    std::string vardas_;
-    std::string pavarde_;
     std::vector<int> nd_;
     int egzaminas_;
     double galutinis_vidurkis_;
@@ -18,22 +17,22 @@ private:
     void skaiciuoti();
 
 public:
-    Studentas() : egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {}
-    Studentas(std::istream& is) : egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
+    Studentas() : Zmogus(), egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {}
+    Studentas(std::istream& is) : Zmogus(), egzaminas_(0), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
         readStudent(is);
     }
 
     Studentas(const std::string& v, const std::string& p, const std::vector<int>& pz, int e)
-        : vardas_(v), pavarde_(p), nd_(pz), egzaminas_(e), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
+        : Zmogus(v, p), nd_(pz), egzaminas_(e), galutinis_vidurkis_(0.0), galutinis_mediana_(0.0) {
         skaiciuoti();
     }
 
     Studentas(const Studentas& kitas)
-        : vardas_(kitas.vardas_), pavarde_(kitas.pavarde_), nd_(kitas.nd_), egzaminas_(kitas.egzaminas_),
+        : Zmogus(kitas), nd_(kitas.nd_), egzaminas_(kitas.egzaminas_),
           galutinis_vidurkis_(kitas.galutinis_vidurkis_), galutinis_mediana_(kitas.galutinis_mediana_) {}
 
     Studentas(Studentas&& kitas) noexcept
-        : vardas_(std::move(kitas.vardas_)), pavarde_(std::move(kitas.pavarde_)), nd_(std::move(kitas.nd_)),
+        : Zmogus(std::move(kitas)), nd_(std::move(kitas.nd_)),
           egzaminas_(kitas.egzaminas_), galutinis_vidurkis_(kitas.galutinis_vidurkis_), galutinis_mediana_(kitas.galutinis_mediana_) {
         kitas.egzaminas_ = 0;
         kitas.galutinis_vidurkis_ = 0.0;
@@ -42,8 +41,7 @@ public:
 
     Studentas& operator=(const Studentas& kitas) {
         if (this != &kitas) {
-            vardas_ = kitas.vardas_;
-            pavarde_ = kitas.pavarde_;
+            Zmogus::operator=(kitas);
             nd_ = kitas.nd_;
             egzaminas_ = kitas.egzaminas_;
             galutinis_vidurkis_ = kitas.galutinis_vidurkis_;
@@ -54,8 +52,7 @@ public:
 
     Studentas& operator=(Studentas&& kitas) noexcept {
         if (this != &kitas) {
-            vardas_ = std::move(kitas.vardas_);
-            pavarde_ = std::move(kitas.pavarde_);
+            Zmogus::operator=(std::move(kitas));
             nd_ = std::move(kitas.nd_);
             egzaminas_ = kitas.egzaminas_;
             galutinis_vidurkis_ = kitas.galutinis_vidurkis_;
@@ -67,17 +64,17 @@ public:
         return *this;
     }
 
- ~Studentas() {
-        vardas_.clear();
-        pavarde_.clear();
-        nd_.clear();
-        egzaminas_ = 0;
-        galutinis_vidurkis_ = 0.0;
-        galutinis_mediana_ = 0.0;
+     ~Studentas() override {
+         nd_.clear();
+         egzaminas_ = 0;
+         galutinis_vidurkis_ = 0.0;
+         galutinis_mediana_ = 0.0;
+     }
+
+    void spausdintiInfo() const override {
+        std::cout << "Studentas: " << vardas() << " " << pavarde() << ", Vidurkis: " << galVid() << "\n";
     }
 
-    inline std::string vardas() const { return vardas_; }
-    inline std::string pavarde() const { return pavarde_; }
     inline std::vector<int> pazymiai() const { return nd_; }
     inline int egzaminas() const { return egzaminas_; }
     inline double galVid() const { return galutinis_vidurkis_; }
