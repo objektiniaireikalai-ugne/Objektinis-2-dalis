@@ -131,7 +131,9 @@ bool nuskaitymas(std::vector<Studentas>& grupe, const std::string& failas) {
         if (eilute.empty()) continue;
         std::istringstream ss(eilute);
         
-        Studentas A(ss); 
+        Studentas A;
+        ss >> A; 
+        
         if (!A.vardas().empty()) {
             grupe.push_back(A);
         }
@@ -151,7 +153,9 @@ bool nuskaitymas(std::list<Studentas>& grupe, const std::string& failas) {
         if (eilute.empty()) continue;
         std::istringstream ss(eilute);
         
-        Studentas A(ss);
+        Studentas A;
+        ss >> A; 
+        
         if (!A.vardas().empty()) {
             grupe.push_back(A);
         }
