@@ -289,6 +289,8 @@ int main() {
 
                 Studentas A(tempVar, tempPav, tempPaz, tempEgz);
 
+                cout << "Sukurtas studentas: " << A << "\n"; 
+
                 if (konteineris == 1) {
                     grupe.push_back(A);
                     cout << "Studento (Vector) saugojimo atmintyje adresas: " << &grupe.back() << "\n";
