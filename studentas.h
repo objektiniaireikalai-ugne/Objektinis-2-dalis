@@ -84,6 +84,9 @@ public:
     inline double galMed() const { return galutinis_mediana_; }
     
     std::istream& readStudent(std::istream& is);
+
+    friend std::istream& operator>>(std::istream& is, Studentas& s);
+    friend std::ostream& operator<<(std::ostream& os, const Studentas& s);
 };
 
 bool compare(const Studentas& a, const Studentas& b);
