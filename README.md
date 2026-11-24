@@ -385,3 +385,17 @@ Mūsų programa palaiko kelis skirtingus būdus, kaip dirbti su duomenimis, kas 
 *   **Į ekraną:** Naudojama specializuota `output()` funkcija, kuri leidžia pasirinkti, ar rodyti vidurkį, ar medianą, ir gražiai suformatuoja lentelę.
 *   **Į failą:** Naudojama `IsvestiIFaila()` funkcija. Ji išsaugo studentų sąrašą į tekstinį failą, taip pat leisdama pasirinkti vidurkio ar medianos stulpelį.
 
+### Programos veikimo demonstracija (v1.2)
+
+**1. Rankinis įvedimas ir operator<< veikimas:**
+<img width="435" height="15" alt="image" src="https://github.com/user-attachments/assets/aa805a92-8268-4a27-84ed-31e431f2ef93" />
+
+**2. Duomenų skaitymas iš failo (operator>>):**
+<img width="152" height="27" alt="image" src="https://github.com/user-attachments/assets/4854f11b-26ab-4967-8f54-e96312dc0fdf" />
+
+**3. Išvedimas į ekraną:**
+<img width="424" height="84" alt="image" src="https://github.com/user-attachments/assets/f84ff191-5ce9-4785-bf36-32b45325cc7e" />
+
+**4. Išvedimas į failą:**
+<img width="206" height="158" alt="image" src="https://github.com/user-attachments/assets/526849e2-9a16-4e33-b447-cde6ead8ec68" />
+
