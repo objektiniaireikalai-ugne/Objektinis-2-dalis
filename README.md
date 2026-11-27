@@ -399,3 +399,23 @@ Mūsų programa palaiko kelis skirtingus būdus, kaip dirbti su duomenimis, kas 
 **4. Išvedimas į failą:**
 <img width="206" height="158" alt="image" src="https://github.com/user-attachments/assets/526849e2-9a16-4e33-b447-cde6ead8ec68" />
 
+## v1.5 – Paveldėjimas ir Abstrakčios klasės
+
+Šioje versijoje programa buvo papildyta paveldėjimu (Inheritance) ir abstrakčiomis klasėmis.
+
+### Kodo pakeitimai:
+* **Bazinė (abstrakti) klasė `zmogus`:** Joje saugomi bendri žmogaus duomenys (`vardas_`, `pavarde_`) ir apibrėžta grynoji virtuali funkcija `virtual void spausdintiInfo() const = 0;`. Dėl šios funkcijos neįmanoma sukurti `zmogus` tipo objekto.
+* **Išvestinė (derived) klasė `Studentas`:** Ji paveldi `zmogus` klasę (`class Studentas : public zmogus`), todėl gauna vardą ir pavardę. Studento klasėje liko tik studentui būdingi duomenys (pažymiai, egzaminas).
+* **Išsaugota Rule of Three (ir Five):** Kadangi `Studentas` dabar turi bazinę klasę, visi jo konstruktoriai, priskyrimo operatoriai ir destruktorius iškviečia atitinkamus `zmogus` klasės metodus.
+* **Polimorfizmas:** Realizuotas `spausdintiInfo()` metodas, kuris leidžia per bazinės klasės rodyklę pasiekti išvestinės klasės informaciją.
+
+### Abstrakčios klasės ir polimorfizmo demonstracija:
+<img width="362" height="85" alt="image" src="https://github.com/user-attachments/assets/499a58d6-09b5-47de-af53-491e39b83fbb" />
+
+**Paaiškinimas:** Nuotraukoje matosi, kad programa atpažįsta, jog `zmogus` yra abstrakti klasė, todėl objekto sukurti negalima. Tačiau naudojant bazinės klasės rodyklę (`zmogus* zmogus1 = new Studentas(...)`), programa sėkmingai sukuria išvestinės klasės objektą ir iškviečia būtent `Studentas` klasės realizuotą `spausdintiInfo()` metodą. Tai įrodo, kad paveldėjimas ir polimorfizmas veikia tinkamai.
+
+
+
+
+
+
