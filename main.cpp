@@ -225,6 +225,42 @@ void TestuotiStrategijas() {
     }
 }
 
+void DemonstruotiRuleOfThree() {
+    std::cout << "\n===== RULE OF THREE (IR FIVE) DEMONSTRACIJA =====\n";
+
+    std::cout << "\n1. Kuriame studenta A (parametrizuotas konstruktorius):\n";
+    Studentas A("Jonas", "Jonaitis", {8, 9, 10}, 9);
+
+    std::cout << "\n2. Kuriame studenta B kaip A kopija (kopijavimo konstruktorius):\n";
+    Studentas B = A;
+
+    std::cout << "\n3. Kuriame tuscia studenta C ir priskiriame jam A (kopijavimo priskyrimas):\n";
+    Studentas C;
+    C = A;
+
+    std::cout << "\n4. Perkeliame B į D (perkelimo konstruktorius):\n";
+    Studentas D = std::move(B);
+
+    std::cout << "\n5. Perkeliame D į E (perkelimo priskyrimas):\n";
+    Studentas E;
+    E = std::move(D);
+
+    std::cout << "\n6. Visi studentai bus sunaikinti (destruktoriai)...\n";
+}
+
+void DemonstruotiAbstrakciaKlase() {
+    std::cout << "\n===== v1.5 ABSTRAKCIOS KLASES DEMONSTRACIJA =====\n";
+
+    std::cout << "1. Bandymas sukurti 'zmogus' objekta:\n";
+    //zmogus z;
+    std::cout << "   Klaida! 'zmogus' yra abstrakti klase, objekto sukurti negalima.\n";
+
+    std::cout << "\n2. Polimorfizmas per bazines klases rodykle:\n";
+    zmogus* zmogus1 = new Studentas("Antanas", "Antanaitis", {9, 10, 8}, 10);
+    zmogus1->spausdintiInfo();
+    delete zmogus1;
+}
+
 int main() {
     vector<Studentas> grupe, vargsiukai, kietiakai;
 
@@ -244,6 +280,8 @@ int main() {
         cout << "7 - Spausdinti studentus i ekrana\n";
         cout << "8 - Automatinis testavimas (5 failai)\n";
         cout << "9 - Testuoti dalijimo strategijas\n";
+        cout << "10 - Demonstruoti Rule of Three\n";
+        cout << "11 - Demonstruoti Abstrakcia klase\n";
         cout << "0 - Baigti\n";
         cout << "Pasirinkimas: ";
         if (!(cin >> p)) {
@@ -289,7 +327,7 @@ int main() {
 
                 Studentas A(tempVar, tempPav, tempPaz, tempEgz);
 
-                cout << "Sukurtas studentas: " << A << "\n"; 
+                cout << "Sukurtas studentas: " << A << "\n";
 
                 if (konteineris == 1) {
                     grupe.push_back(A);
@@ -395,6 +433,12 @@ int main() {
         }
         else if (p == 9) {
             TestuotiStrategijas();
+        }
+        else if (p == 10) {
+            DemonstruotiRuleOfThree();
+        }
+        else if (p == 11) {
+            DemonstruotiAbstrakciaKlase();
         }
     }
     return 0;
